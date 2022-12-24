@@ -3,12 +3,14 @@ package net.elidhan.anim_guns;
 import net.elidhan.anim_guns.client.render.GunRenderer;
 import net.elidhan.anim_guns.entity.projectile.BulletEntityRenderer;
 import net.elidhan.anim_guns.item.ModItems;
+import net.elidhan.anim_guns.screen.BlueprintScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
@@ -33,14 +35,12 @@ public class AnimatedGunsClient implements ClientModInitializer
         //Recoil Stuff
         ClientPlayNetworking.registerGlobalReceiver(AnimatedGuns.RECOIL_PACKET_ID, (client, handler, buf, sender) ->
         {
-            float v_kick = buf.readFloat();
-            float h_kick = (float)buf.readDouble();
+            float kick = buf.readFloat();
             client.execute(() ->
             {
                 if(client.player != null)
                 {
-                    client.player.setPitch(v_kick);
-                    client.player.setYaw((h_kick));
+                    client.player.setPitch(kick);
                 }
             });
         });
@@ -58,5 +58,7 @@ public class AnimatedGunsClient implements ClientModInitializer
         GeoItemRenderer.registerItemRenderer(ModItems.COMBAT_SHOTGUN, new GunRenderer());
         GeoItemRenderer.registerItemRenderer(ModItems.CLASSIC_SNIPER_RIFLE, new GunRenderer());
         GeoItemRenderer.registerItemRenderer(ModItems.BRUSH_GUN, new GunRenderer());
+
+        HandledScreens.register(AnimatedGuns.BLUEPRINT_SCREEN_HANDLER_TYPE, BlueprintScreen::new);
     }
 }
