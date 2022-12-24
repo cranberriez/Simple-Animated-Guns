@@ -21,7 +21,6 @@ public class BlueprintItem extends Item
     public BlueprintItem(Settings settings)
     {
         super(settings);
-        settings.recipeRemainder(BLUEPRINT_BUNDLE);
         BLUEPRINT_ITEM_LIST.add(this);
     }
 
