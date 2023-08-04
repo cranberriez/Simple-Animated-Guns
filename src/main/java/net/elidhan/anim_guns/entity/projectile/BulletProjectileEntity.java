@@ -65,6 +65,10 @@ public class BulletProjectileEntity extends PersistentProjectileEntity
             entity.damage(DamageSource.arrow(this, this.getOwner() != null?this.getOwner():this), this.bulletDamage);
             entity.timeUntilRegen = 0;
         }
+        else if (entityHitResult.getEntity() instanceof EnderDragonPart part)
+        {
+            part.getParent().damage(DamageSource.arrow(this, this.getOwner() != null ? this.getOwner() : this), this.bulletDamage);
+        }
         this.discard();
     }
 
